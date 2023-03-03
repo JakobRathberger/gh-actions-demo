@@ -55,9 +55,11 @@ jobs:
         with:
           file: ./src/main/docker/Dockerfile.jvm
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache,mode=max
+          tags: latest
+          labels: ${{ env.IMAGE_NAME }}
+          #tags: ${{ steps.meta.outputs.tags }}
+          #labels: ${{ steps.meta.outputs.labels }}
+          #cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache
+          #cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache,mode=max
 
 
