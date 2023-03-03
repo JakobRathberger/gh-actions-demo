@@ -4,6 +4,5 @@ Accept: application/json
 
 ### POST
 POST {{url}}/example
-Content-Type: application/json
 
-ExampleName
+ExampleName2
