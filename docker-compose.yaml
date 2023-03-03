@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  gh-actions-demo-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+    ports:
+      - '5432:5432'
+    volumes:
+      - gh-actions-demo-db:/var/lib/postgresql/data
+volumes:
+  gh-actions-demo-db:
