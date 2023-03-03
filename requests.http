@@ -1,9 +1,9 @@
 ### GET
-GET http://localhost:8080/example
+GET {{url}}/example
 Accept: application/json
 
 ### POST
-POST http://localhost:8080/example
+POST {{url}}/example
 Content-Type: application/json
 
 ExampleName

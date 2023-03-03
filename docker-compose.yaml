@@ -13,9 +13,10 @@ services:
       - gh-actions-demo-db:/var/lib/postgresql/data
   gh-actions-demo:
     container_name: gh-actions-demo
-    build:
-      dockerfile: ./src/main/docker/Dockerfile.jvm
+    image: ghcr.io/jakobrathberger/gh-action-demo:latest
     environment:
       - quarkus_datasource_jdbc_url=jdbc:postgresql://gh-actions-demo-db:5432/postgres
+    ports:
+      - '8080:8080'
 volumes:
   gh-actions-demo-db:
