@@ -11,11 +11,16 @@ public class ExampleResourceTest {
 
     @Test
     public void testExampleEndpoint() {
+        given().body("ExampleName")
+                .when().post("/example")
+                .then()
+                .statusCode(204);
+
         given()
-                .when().get("/example/hello")
+                .when().get("/example")
                 .then()
                 .statusCode(200)
-                .body(is("Hello World!"));
+                .body(is("[{\"id\":1,\"name\":\"ExampleName\"}]"));
     }
 
 }
