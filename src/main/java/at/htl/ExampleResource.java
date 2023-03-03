@@ -12,6 +12,12 @@ import java.util.List;
 public class ExampleResource {
 
     @GET
+    @Path("/hello")
+    public String hello(){
+        return "Hello World!";
+    }
+
+    @GET
     public List<ExampleEntity> getAll() {
         return ExampleEntity.listAll();
     }
