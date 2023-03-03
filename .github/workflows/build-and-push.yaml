@@ -41,9 +41,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN  }}
 
-      - name: Build Packages
-        run: |
-          ./mvnw package -DskipTests
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Package
+        run: ./mvnw clean package -DskipTests
 
       - name: Build and push images
         uses: docker/build-push-action@v3
