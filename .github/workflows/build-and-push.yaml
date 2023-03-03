@@ -36,6 +36,9 @@ jobs:
       - name: Package
         run: ./mvnw clean package -DskipTests
 
+      - name: Run Tests
+        run: ./mvnw test
+
       - name: Build and push images
         uses: docker/build-push-action@v3
         with:
