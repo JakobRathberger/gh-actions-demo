@@ -16,7 +16,7 @@ export default makeScene2D(function* (view) {
     view.add(
         <>
             <Img
-                height={()=> view.height()} width={()=> view.width()}
+                height={() => view.height()} width={() => view.width()}
                 ref={programmerBG}
                 src={programmerImg}
                 radius={40}
@@ -29,12 +29,13 @@ export default makeScene2D(function* (view) {
             <Rect ref={backgroundRect}
                   fill={"white"}
                   height={() => view.height() / 2 - 80}
-                  width={1000}
+                  width={1200 + 40}
                   opacity={0.9}
                   x={() => view.width() / 2 - (backgroundRect().width() / 2) - 40}
                   y={-150}
                   radius={40}>
-                <Txt x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 40}
+                <Txt fontStyle={"bold"} fontFamily={"Fira Code"}
+                     x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 40}
                      y={() => backgroundRect().height() / -2 + 100}
                      width={() => backgroundRect().width() / 2}
                      fontSize={100} text={"Manually"}/>
@@ -44,7 +45,8 @@ export default makeScene2D(function* (view) {
                         y={() => backgroundRect().height() / -2 + 200}
                         height={20} width={20}/>
 
-                <Txt x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 140}
+                <Txt fontStyle={"bold"} fontFamily={"Fira Code"}
+                     x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 140}
                      y={() => backgroundRect().height() / -2 + 200}
                      width={() => backgroundRect().width() / 2}
                      fontSize={40}
@@ -55,7 +57,8 @@ export default makeScene2D(function* (view) {
                         y={() => backgroundRect().height() / -2 + 300}
                         height={20} width={20}/>
 
-                <Txt x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 140}
+                <Txt fontStyle={"bold"} fontFamily={"Fira Code"}
+                     x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 140}
                      y={() => backgroundRect().height() / -2 + 300}
                      width={() => backgroundRect().width() / 2}
                      fontSize={40} text={"ensuring code quality (linting, formatting)"}/>
