@@ -86,5 +86,5 @@ export default makeScene2D(function* (view) {
         titleText().text("GitHub Actions", 1),
     )
 
-    yield* waitFor(3)
+    yield* beginSlide("End Logo");
 })
