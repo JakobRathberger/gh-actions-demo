@@ -39,11 +39,17 @@ by building it and running tests against it.
 This makes integration easier by checking if the new change is not
 breaking the application.
 
-=== Continuous Deployment (CD)
+=== Continuous Delivery (CD)
 
 Continuous delivery is an extension to continuous integration.
 It adds a step that automatically deploys
-an application to a test or production environment.
+an application to a test/staging environment.
+
+=== Continuous Deployment (CD)
+
+Continuous deployment is an extension to continuous delivery.
+It adds a step that automatically deploys
+an application to a production environment.
 
 == Alternatives
 
