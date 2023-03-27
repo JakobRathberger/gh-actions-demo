@@ -5,8 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="author" content="Neudorfer Niklas">
 <link rel="icon" type="image/png" href="themes/favicon.png">
-<title>Index</title>
+<title>GH-Actions</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,17 +438,403 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Index</h1>
+<h1>GH-Actions</h1>
+<div class="details">
+<span id="author" class="author">Neudorfer Niklas</span><br>
+<span id="revnumber">version 1.0.0,</span>
+<span id="revdate">2022-12-15</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_problem">1. Problem</a></li>
+<li><a href="#_solution_github_actions">2. Solution (GitHub-Actions)</a>
+<ul class="sectlevel2">
+<li><a href="#_what_it_is">2.1. What it is?</a></li>
+</ul>
+</li>
+<li><a href="#_concepts">3. Concepts</a>
+<ul class="sectlevel2">
+<li><a href="#_continuous_integration_ci">3.1. Continuous Integration (CI)</a></li>
+<li><a href="#_continuous_deployment_cd">3.2. Continuous Deployment (CD)</a></li>
+</ul>
+</li>
+<li><a href="#_alternatives">4. Alternatives</a>
+<ul class="sectlevel2">
+<li><a href="#_why_github_actions">4.1. Why GitHub-Actions</a></li>
+</ul>
+</li>
+<li><a href="#_example_of_using_github_actions">5. Example of using GitHub-Actions</a>
+<ul class="sectlevel2">
+<li><a href="#_testing_the_app">5.1. Testing the App</a></li>
+<li><a href="#_building_and_push">5.2. Building and Push</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_problem"><a class="anchor" href="#_problem"></a>1. Problem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Manually</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>testing, building and deploying applications or</p>
+</li>
+<li>
+<p>ensuring code quality (linting, formatting)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>is a lot of work and specific steps like testing or formatting can be forgotten.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_solution_github_actions"><a class="anchor" href="#_solution_github_actions"></a>2. Solution (GitHub-Actions)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_it_is"><a class="anchor" href="#_what_it_is"></a>2.1. What it is?</h3>
+<div class="paragraph">
+<p>GitHub Actions enables you to add Workflows or pipelines to your repository.
+These define a sequence of tasks to be executed automatically whenever a certain event occurs,
+such as a push to a Git repository or a pull request.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts"><a class="anchor" href="#_concepts"></a>3. Concepts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_continuous_integration_ci"><a class="anchor" href="#_continuous_integration_ci"></a>3.1. Continuous Integration (CI)</h3>
+<div class="paragraph">
+<p>Continuous integration validates changes to an application
+by building it and running tests against it.
+This makes integration easier by checking if the new change is not
+breaking the application.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_deployment_cd"><a class="anchor" href="#_continuous_deployment_cd"></a>3.2. Continuous Deployment (CD)</h3>
+<div class="paragraph">
+<p>Continuous delivery is an extension to continuous integration.
+It adds a step that automatically deploys
+an application to a test or production environment.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_alternatives"><a class="anchor" href="#_alternatives"></a>4. Alternatives</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Jenkins (Open-Source)</p>
+</li>
+<li>
+<p>BitBucket Pipelines</p>
+</li>
+<li>
+<p>GitLab CI/CD</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_why_github_actions"><a class="anchor" href="#_why_github_actions"></a>4.1. Why GitHub-Actions</h3>
+<div class="paragraph">
+<p>When you are already using a GitHub Repository it is the easiest
+way to build a CI/CD pipeline because there is no setup required.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_of_using_github_actions"><a class="anchor" href="#_example_of_using_github_actions"></a>5. Example of using GitHub-Actions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this example a quarkus app with a postgres database
+will be tested, built and deployed.</p>
+</div>
+<div class="sect2">
+<h3 id="_testing_the_app"><a class="anchor" href="#_testing_the_app"></a>5.1. Testing the App</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">build-and-push</span>
 
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">main</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">tests</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Test</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="na">services</span><span class="pi">:</span>
+      <span class="na">postgres</span><span class="pi">:</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">postgres:14</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">POSTGRES_USER</span><span class="pi">:</span> <span class="s">app</span>
+          <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s">app</span>
+        <span class="na">ports</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">5432:5432</span>
+        <span class="na">options</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+          <span class="s">--health-cmd pg_isready</span>
+          <span class="s">--health-interval 10s</span>
+          <span class="s">--health-timeout 5s</span>
+          <span class="s">--health-retries 5</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout repository</span> <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up JDK 17</span> <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-java@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">distribution</span><span class="pi">:</span> <span class="s1">'</span><span class="s">temurin'</span>
+          <span class="na">java-version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">17'</span>
+          <span class="na">cache</span><span class="pi">:</span> <span class="s1">'</span><span class="s">maven'</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Run Tests</span> <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">./mvnw test</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This job will run when someone pushes to main or a pull_request is updated</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This will start a postgres inside a docker container which can be used
+for testing our quarkus app.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This will clone the repository</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set up the JDK so the tests can run.
+This will also cache the maven packages so they do not need to be downloaded every time.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Run the tests</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_and_push"><a class="anchor" href="#_building_and_push"></a>5.2. Building and Push</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml">  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout repository</span> <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Setup Docker Buildx</span> <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/setup-buildx-action@v2</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Login to GHCR</span> <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/login-action@v2</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">registry</span><span class="pi">:</span> <span class="s">ghcr.io</span>
+          <span class="na">username</span><span class="pi">:</span> <span class="s">${{ github.repository_owner }}</span>
+          <span class="na">password</span><span class="pi">:</span> <span class="s">${{ secrets.GITHUB_TOKEN  }}</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up JDK 17</span> <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-java@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">distribution</span><span class="pi">:</span> <span class="s1">'</span><span class="s">temurin'</span>
+          <span class="na">java-version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">17'</span>
+          <span class="na">cache</span><span class="pi">:</span> <span class="s1">'</span><span class="s">maven'</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Package</span> <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">./mvnw clean package -DskipTests</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build and push images</span> <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/build-push-action@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">context</span><span class="pi">:</span> <span class="s">./</span>
+          <span class="na">file</span><span class="pi">:</span> <span class="s">./src/main/docker/Dockerfile.jvm</span>
+          <span class="na">push</span><span class="pi">:</span> <span class="s">${{ github.event_name != 'pull_request' }}</span>
+          <span class="na">tags</span><span class="pi">:</span> <span class="s">${{ env.IMAGE_NAME }}:latest</span>
+          <span class="na">platforms</span><span class="pi">:</span> <span class="s">linux/amd64,linux/arm64</span>
+          <span class="na">cache-from</span><span class="pi">:</span> <span class="s">type=registry,ref=${{ env.IMAGE_NAME }}:buildcache</span> <i class="conum" data-value="7"></i><b>(7)</b>
+          <span class="na">cache-to</span><span class="pi">:</span> <span class="s">type=registry,ref=${{ env.IMAGE_NAME }}:buildcache,mode=max</span> <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Clone the repository</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Setup Docker Buildx to use the features by Moby BuildKit builder toolkit</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Login to the GitHub Docker Registry to be able to push to it</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set up JDK 17 and cache the maven packages</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Package the quarkus app</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Build the container and push it</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Cache the build so it is faster when rebuilding unchanged steps</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-03-27 11:36:15 UTC
+Version 1.0.0<br>
+Last updated 2023-03-27 15:45:50 UTC
 </div>
 </div>
 </body>
