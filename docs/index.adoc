@@ -1,6 +1,4 @@
 = GH-Actions
-Neudorfer Niklas
-1.0.0, 2022-12-15
 ifndef::imagesdir[:imagesdir: .]
 //:toc-placement!:
 :sourcedir: .
