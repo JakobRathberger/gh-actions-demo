@@ -5,8 +5,8 @@ import deployStagingImg from "../../images/deployStaging.svg";
 import testImg from "../../images/test.png";
 
 import {makeScene2D} from "@motion-canvas/2d";
-import {Circle, Img, Layout, Line, Rect, Txt} from "@motion-canvas/2d/lib/components";
-import {all, waitFor} from "@motion-canvas/core/lib/flow";
+import {Circle, Img, Line, Rect, Txt} from "@motion-canvas/2d/lib/components";
+import {all, chain} from "@motion-canvas/core/lib/flow";
 import {slideTransition} from "@motion-canvas/core/lib/transitions";
 import {Direction} from "@motion-canvas/core/lib/types";
 import {beginSlide, createRef} from "@motion-canvas/core/lib/utils";
@@ -21,7 +21,7 @@ export default makeScene2D(function* (view) {
 
     view.add(
         <Txt ref={headingText} fontSize={120} fontFamily={"Fira Code"}
-             y={() => view.height() / -2 + 200} zIndex={100} fill={"limegreen"}/>
+             y={() => view.height() / -2 + 200} zIndex={100} fill={"white"}/>
     )
 
     // -----------------------------------------------
@@ -187,12 +187,21 @@ export default makeScene2D(function* (view) {
         />
     )
 
+    yield* all(
+        slideTransition(Direction.Right, 2),
+        headingText().text("Concepts", 2)
+    )
+
 
     yield* beginSlide("Continuous Integration")
-    yield* all(
-        boundingBoxIntegration().opacity(1, 0.5),
-        boundingBoxIntegration().nodes([buildSquare(), testText()], 2),
-        headingText().text("Continuous Integration", 2),
+    yield* chain(
+        headingText().text("", 1),
+        all(
+            boundingBoxIntegration().opacity(1, 0.5),
+            boundingBoxIntegration().nodes([buildSquare(), testText()], 2),
+            headingText().fill("limegreen", 1),
+            headingText().text("Continuous Integration", 2),
+        )
     )
 
     yield* beginSlide("Continuous Delivery")
@@ -210,8 +219,6 @@ export default makeScene2D(function* (view) {
         headingText().fill("red", 1),
         headingText().text("Continuous Deployment", 2),
     )
-
-    yield* waitFor(10)
 
     yield* beginSlide("End Pipeline")
 
