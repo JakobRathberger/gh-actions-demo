@@ -1,5 +1,5 @@
 import {makeScene2D} from "@motion-canvas/2d";
-import {Circle, Line, Rect, Txt} from "@motion-canvas/2d/lib/components";
+import {Circle, Layout, Line, Rect, Txt, Node} from "@motion-canvas/2d/lib/components";
 import {beginSlide, createRef, range} from "@motion-canvas/core/lib/utils";
 import {easeInCubic} from "@motion-canvas/core/lib/tweening";
 import {all, chain, waitFor} from "@motion-canvas/core/lib/flow";
@@ -31,6 +31,7 @@ export default makeScene2D(function* (view) {
     const runner1CircleWhiteRight = createRef<Circle>()
     const runner1Text = createRef<Txt>()
     const runner1Content = createRef<Rect>()
+    const runner1ContentText = createRef<Node>()
 
     const connectorLine = createRef<Line>()
 
@@ -38,6 +39,10 @@ export default makeScene2D(function* (view) {
     const runner2CircleWhiteLeft = createRef<Circle>()
     const runner2Text = createRef<Txt>()
     const runner2Content = createRef<Rect>()
+    const runner2ContentText = createRef<Node>()
+
+    const job1Text = createRef<Txt>()
+    const job2Text = createRef<Txt>()
 
     const connectorLength = createSignal(0);
 
@@ -139,6 +144,28 @@ export default makeScene2D(function* (view) {
                 height={boxHeight * 3}
                 radius={[0, 0, boxRadius, boxRadius]}
             >
+                <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={20} layout>
+                    <Txt ref={job1Text}/>
+
+                    <Node opacity={0} ref={runner1ContentText}>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 1: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                        </Rect>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 2: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                        </Rect>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 3: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                        </Rect>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 4: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                        </Rect>
+                    </Node>
+                </Layout>
             </Rect>
         </Rect>
     )
@@ -169,12 +196,30 @@ export default makeScene2D(function* (view) {
 
             <Rect
                 ref={runner2Content}
-                y={boxHeight * 2}
+                y={boxHeight}
                 fill="#FFFFFF"
                 width={boxWidth}
-                height={boxHeight * 3}
+                height={boxHeight}
                 radius={[0, 0, boxRadius, boxRadius]}
             >
+                <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={20} layout>
+                    <Txt ref={job2Text}/>
+
+                    <Node opacity={0}  ref={runner2ContentText}>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 1: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                        </Rect>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 2: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                        </Rect>
+                        <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                            <Txt height={60} text={"Step 3: "}/>
+                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                        </Rect>
+                    </Node>
+                </Layout>
             </Rect>
         </Rect>
     )
@@ -272,16 +317,30 @@ export default makeScene2D(function* (view) {
         // BOX 1
         runner1().radius([boxRadius, boxRadius, 0, 0], 0.5, easeInCubic),
         all(
-            runner1Content().position.y(boxHeight * 2, 1),
-            runner1Content().height(boxHeight * 3, 1)
+            chain(
+                all(
+                    runner1Content().position.y(boxHeight * 2.5, 1),
+                    runner1Content().height(boxHeight * 4, 1),
+                ),
+                job1Text().text("Job 1", 1),
+                runner1ContentText().opacity(1,2)
+            )
         ),
         // BOX 2
         runner2().radius([boxRadius, boxRadius, 0, 0], 0.5, easeInCubic),
         all(
-            runner2Content().position.y(boxHeight * 2, 1),
-            runner2Content().height(boxHeight * 3, 1)
+            chain(
+                all(
+                    runner2Content().position.y(boxHeight * 2, 1),
+                    runner2Content().height(boxHeight * 3, 1),
+                ),
+                job2Text().text("Job 2",1),
+                runner2ContentText().opacity(1,1.9)
+            )
         )
     )
 
     yield* waitFor(3)
+
+    yield* beginSlide("Components End")
 });
