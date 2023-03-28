@@ -14,7 +14,7 @@ export default makeScene2D(function* (view) {
     const withCICD = createRef<Img>()
     const withoutCICD = createRef<Img>()
 
-    view.add(
+    yield view.add(
         <>
             <Img
                 ref={withCICD}

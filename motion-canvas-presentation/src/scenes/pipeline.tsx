@@ -200,7 +200,7 @@ export default makeScene2D(function* (view) {
             boundingBoxIntegration().opacity(1, 0.5),
             boundingBoxIntegration().nodes([buildSquare(), testText()], 2),
             headingText().fill("limegreen", 1),
-            headingText().text("Continuous Integration", 2),
+            headingText().text("Continuous Integration", 1.5),
         )
     )
 
@@ -209,7 +209,7 @@ export default makeScene2D(function* (view) {
         boundingBoxIntegration().stroke("cyan", 1),
         boundingBoxIntegration().nodes([buildSquare(), stageText()], 2),
         headingText().fill("cyan", 1),
-        headingText().text("Continuous Delivery", 2),
+        headingText().text("Continuous Delivery", 1.5),
     )
 
     yield* beginSlide("Continuous Deployment")
@@ -217,10 +217,8 @@ export default makeScene2D(function* (view) {
         boundingBoxIntegration().stroke("red", 1),
         boundingBoxIntegration().nodes([buildSquare(), productionText()], 2),
         headingText().fill("red", 1),
-        headingText().text("Continuous Deployment", 2),
+        headingText().text("Continuous Deployment", 1.5),
     )
 
     yield* beginSlide("End Pipeline")
-
-
 })

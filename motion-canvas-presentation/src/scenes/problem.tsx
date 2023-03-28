@@ -28,11 +28,11 @@ export default makeScene2D(function* (view) {
 
             <Rect ref={backgroundRect}
                   fill={"white"}
-                  height={() => view.height() / 2 - 80}
+                  height={() => view.height() / 2 - 140}
                   width={1200 + 40}
                   opacity={0.9}
                   x={() => view.width() / 2 - (backgroundRect().width() / 2) - 40}
-                  y={-150}
+                  y={320}
                   radius={40}>
                 <Txt fontStyle={"bold"} fontFamily={"Fira Code"}
                      x={() => backgroundRect().width() / -2 + backgroundRect().width() / 4 + 40}

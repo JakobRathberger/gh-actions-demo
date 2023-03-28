@@ -170,6 +170,10 @@ export default makeScene2D(function* (view) {
         </Rect>
     )
 
+    const runner2Step1 = createRef<Txt>()
+    const runner2Step2 = createRef<Txt>()
+    const runner2Step3 = createRef<Txt>()
+
     view.add(
         <Rect
             ref={runner2}
@@ -205,18 +209,18 @@ export default makeScene2D(function* (view) {
                 <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={20} layout>
                     <Txt ref={job2Text}/>
 
-                    <Node opacity={0}  ref={runner2ContentText}>
+                    <Node opacity={0} ref={runner2ContentText}>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 1: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                            <Txt ref={runner2Step1} paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
                         </Rect>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 2: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                            <Txt ref={runner2Step2} paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
                         </Rect>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 3: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                            <Txt ref={runner2Step3} paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
                         </Rect>
                     </Node>
                 </Layout>
@@ -323,7 +327,7 @@ export default makeScene2D(function* (view) {
                     runner1Content().height(boxHeight * 4, 1),
                 ),
                 job1Text().text("Job 1", 1),
-                runner1ContentText().opacity(1,2)
+                runner1ContentText().opacity(1, 2)
             )
         ),
         // BOX 2
@@ -334,13 +338,30 @@ export default makeScene2D(function* (view) {
                     runner2Content().position.y(boxHeight * 2, 1),
                     runner2Content().height(boxHeight * 3, 1),
                 ),
-                job2Text().text("Job 2",1),
-                runner2ContentText().opacity(1,1.9)
+                job2Text().text("Job 2", 1),
+                runner2ContentText().opacity(1, 1.9)
             )
         )
     )
 
-    yield* waitFor(3)
+    yield* beginSlide("Fill with data")
 
-    yield* beginSlide("Components End")
+
+    yield* chain(
+        all(
+            job1Text().fontSize(40, 1),
+            job2Text().fontSize(40, 1),
+            job1Text().text("Runt Tests:", 1),
+            job2Text().text("Build and Publish:", 1)
+        ),
+        all(
+            runner2Step1().text("Checkout Repo", 2),
+            runner2Step2().text("Setup Docker Buildx", 2),
+            runner2Step2().fontSize(36, 2),
+            runner2Step3().text("Login to GHCR", 2)
+        )
+    )
+
+
+    yield* beginSlide("End Componentes")
 });

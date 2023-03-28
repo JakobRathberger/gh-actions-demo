@@ -18,7 +18,7 @@ export default makeScene2D(function* (view) {
     const bitBucket = createRef<Img>()
     const ghActions = createRef<Img>()
 
-    view.add(
+    yield view.add(
         <Rect fill={"white"} height={() => view.height()} width={() => view.width()} radius={40}>
             <Txt fontStyle={"bold"} fontFamily={"Fira Code"} text={"Solutions"} fill={"black"} fontSize={120}
                  y={() => view.height() / -2 + 100}/>
