@@ -90,7 +90,6 @@ export default makeScene2D(function* (view) {
 
     view.add(
         <>
-
             <Circle height={circle} width={circle} fill={"white"}
                     x={() => view.width() / 5 * -2}
                     y={moveBelow}>

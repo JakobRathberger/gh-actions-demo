@@ -1,5 +1,5 @@
 import {makeScene2D} from "@motion-canvas/2d";
-import {Circle, Layout, Line, Rect, Txt, Node} from "@motion-canvas/2d/lib/components";
+import {Circle, Layout, Line, Rect, Txt, Node, RectProps, CircleProps} from "@motion-canvas/2d/lib/components";
 import {beginSlide, createRef, range} from "@motion-canvas/core/lib/utils";
 import {easeInCubic} from "@motion-canvas/core/lib/tweening";
 import {all, chain, waitFor} from "@motion-canvas/core/lib/flow";
@@ -7,16 +7,40 @@ import {createSignal} from "@motion-canvas/core/lib/signals";
 import {slideTransition} from "@motion-canvas/core/lib/transitions";
 import {Direction} from "@motion-canvas/core/lib/types";
 
+const boxWidth = 500;
+const boxHeight = 120;
+const boxRadius = 20;
+const spacingFactor = 1.4
+const moveToTop = -200;
+
+const circleRadius = 30;
+const smallerCircleRadius = circleRadius - 10;
+
+
+const headerRectStyle: RectProps = {
+    y: moveToTop,
+    fill: '#0A69DB',
+    zIndex: 10,
+    width: boxWidth,
+    height: boxHeight,
+    radius: boxRadius
+};
+
+const blueCircleStyle: CircleProps = {
+    width: circleRadius,
+    height: circleRadius,
+    fill: '#0A69DB',
+    zIndex: 10
+};
+
+const smallerCircleStyle: CircleProps = {
+    width: smallerCircleRadius,
+    height: smallerCircleRadius,
+    fill: '#FFFFFF'
+}
+
+
 export default makeScene2D(function* (view) {
-    let boxWidth = 500;
-    let boxHeight = 120;
-    let boxRadius = 20;
-    let spacingFactor = 1.4
-    let moveToTop = -200;
-
-    let circleRadius = 30;
-    let smallerCircleRadius = circleRadius - 10;
-
     const event = createRef<Rect>()
     const runner1 = createRef<Rect>()
     const runner2 = createRef<Rect>()
@@ -24,6 +48,7 @@ export default makeScene2D(function* (view) {
     const eventCircleBlue = createRef<Circle>()
     const eventCircleWhite = createRef<Circle>()
     const eventText = createRef<Txt>()
+    const eventContent = createRef<Rect>()
 
     const runner1CircleBlueLeft = createRef<Circle>()
     const runner1CircleWhiteLeft = createRef<Circle>()
@@ -52,15 +77,7 @@ export default makeScene2D(function* (view) {
 
     // region DRAWING
     view.add(
-        <Rect
-            ref={event}
-            x={boxWidth * -spacingFactor}
-            y={moveToTop}
-            fill="#0A69DB"
-            width={0}
-            height={0}
-            radius={boxRadius}
-        >
+        <Node x={boxWidth * -spacingFactor} y={moveToTop}>
             <Line
                 ref={connectorLine}
                 stroke="#AEB1B9"
@@ -70,69 +87,46 @@ export default makeScene2D(function* (view) {
                         connectorLength() * i / 340, 0,
                     ])}
                 zIndex={-1}
-            >
-            </Line>
-        </Rect>
+            />
+        </Node>
     )
 
     view.add(
         <Rect
             ref={event}
             x={boxWidth * -spacingFactor}
-            y={moveToTop}
-            fill="#0A69DB"
-            zIndex={10}
-            width={boxWidth}
-            height={boxHeight}
-            radius={boxRadius}
+            {...headerRectStyle}
         >
-            <Txt ref={eventText} text="Event" fill="#FFFFFF"/>
+            <Txt ref={eventText} fill="#FFFFFF"/>
 
-            <Circle
-                ref={eventCircleBlue}
-                width={circleRadius}
-                height={circleRadius}
+            <Circle ref={eventCircleBlue} {...blueCircleStyle} x={() => event().width() / 2}>
+                <Circle ref={eventCircleWhite} {...smallerCircleStyle}/>
+            </Circle>
+
+            <Rect
+                ref={eventContent}
+                x={boxWidth * -spacingFactor}
+                y={moveToTop}
                 fill="#0A69DB"
                 zIndex={10}
-                x={() => event().width() / 2}>
-                <Circle ref={eventCircleWhite} width={smallerCircleRadius} height={smallerCircleRadius} fill="#FFFFFF"/>
-            </Circle>
+                width={boxWidth}
+                height={boxHeight}
+                radius={boxRadius}
+            />
+
         </Rect>
     )
 
     view.add(
-        <Rect
-            ref={runner1}
-            x={0}
-            y={moveToTop}
-            fill="#0A69DB"
-            zIndex={10}
-            width={boxWidth}
-            height={boxHeight}
-            radius={[boxRadius, boxRadius, 0, 0]}
-        >
-            <Txt ref={runner1Text} text="Runner 1" fill="#FFFFFF"/>
+        <Rect ref={runner1} x={0} {...headerRectStyle}>
+            <Txt ref={runner1Text} fill="#FFFFFF"/>
 
-            <Circle
-                ref={runner1CircleBlueLeft}
-                width={circleRadius}
-                height={circleRadius}
-                fill="#0A69DB"
-                x={() => runner1().width() / -2}>
-                <Circle ref={runner1CircleWhiteLeft}
-                        width={smallerCircleRadius}
-                        height={smallerCircleRadius}
-                        fill="#FFFFFF"/>
+            <Circle ref={runner1CircleBlueLeft} {...blueCircleStyle} x={() => runner1().width() / -2}>
+                <Circle ref={runner1CircleWhiteLeft} {...smallerCircleStyle}/>
             </Circle>
 
-            <Circle
-                ref={runner1CircleBlueRight}
-                width={circleRadius}
-                height={circleRadius}
-                fill="#0A69DB"
-                x={() => runner1().width() / 2}>
-                <Circle ref={runner1CircleWhiteRight} width={smallerCircleRadius} height={smallerCircleRadius}
-                        fill="#FFFFFF"/>
+            <Circle ref={runner1CircleBlueRight} {...blueCircleStyle} x={() => runner1().width() / 2}>
+                <Circle ref={runner1CircleWhiteRight} {...smallerCircleStyle}/>
             </Circle>
 
 
@@ -178,24 +172,12 @@ export default makeScene2D(function* (view) {
         <Rect
             ref={runner2}
             x={boxWidth * spacingFactor}
-            y={moveToTop}
-            fill="#0A69DB"
-            zIndex={10}
-            width={boxWidth}
-            height={boxHeight}
-            radius={[boxRadius, boxRadius, 0, 0]}
+            {...headerRectStyle}
         >
-            <Txt ref={runner2Text} text="Runner 2" fill="#FFFFFF"/>
+            <Txt ref={runner2Text} fill="#FFFFFF"/>
 
-            <Circle
-                ref={runner2CircleBlueLeft}
-                width={circleRadius}
-                height={circleRadius}
-                fill="#0A69DB"
-                zIndex={-1}
-                x={() => runner2().width() / -2}>
-                <Circle ref={runner2CircleWhiteLeft} width={smallerCircleRadius} height={smallerCircleRadius}
-                        fill="#FFFFFF"/>
+            <Circle ref={runner2CircleBlueLeft} {...blueCircleStyle} x={() => runner2().width() / -2}>
+                <Circle ref={runner2CircleWhiteLeft} {...smallerCircleStyle}/>
             </Circle>
 
             <Rect
@@ -238,11 +220,9 @@ export default makeScene2D(function* (view) {
     event().save();
     eventCircleBlue().save();
     eventCircleWhite().save();
-    eventText().save();
 
     yield* runner1().radius(boxRadius, 0)
     runner1().save();
-    runner1Text().save()
     runner1CircleWhiteRight().save();
     runner1CircleBlueRight().save();
     runner1CircleWhiteLeft().save();
@@ -251,7 +231,6 @@ export default makeScene2D(function* (view) {
 
     yield* runner2().radius(boxRadius, 0)
     runner2().save();
-    runner2Text().save()
     runner2CircleWhiteLeft().save();
     runner2CircleBlueLeft().save();
     runner2Content().save();
@@ -259,62 +238,69 @@ export default makeScene2D(function* (view) {
     //endregion
 
     // region REMOVE CONTENT
-    yield* event().width(0, 0)
-    yield* eventCircleBlue().width(0, 0)
-    yield* eventCircleBlue().height(0, 0)
-    yield* eventCircleWhite().width(0, 0)
-    yield* eventCircleWhite().height(0, 0)
-    yield* eventText().opacity(0, 0)
+    yield* all(
+        event().width(0, 0),
+        event().height(0, 0),
+        eventCircleBlue().width(0, 0),
+        eventCircleBlue().height(0, 0),
+        eventCircleWhite().width(0, 0),
+        eventCircleWhite().height(0, 0),
 
-    yield* runner1().width(0, 0)
-    yield* runner1Text().opacity(0, 0)
-    yield* runner1CircleWhiteRight().width(0, 0)
-    yield* runner1CircleWhiteRight().height(0, 0)
-    yield* runner1CircleBlueRight().width(0, 0)
-    yield* runner1CircleBlueRight().height(0, 0)
-    yield* runner1CircleWhiteLeft().width(0, 0)
-    yield* runner1CircleWhiteLeft().height(0, 0)
-    yield* runner1CircleBlueLeft().height(0, 0)
-    yield* runner1CircleBlueLeft().width(0, 0)
-    yield* runner1Content().position.y(boxHeight / 2, 0);
-    yield* runner1Content().height(0, 0)
+        runner1().width(0, 0),
+        runner1().height(0, 0),
+        runner1CircleWhiteRight().width(0, 0),
+        runner1CircleWhiteRight().height(0, 0),
+        runner1CircleBlueRight().width(0, 0),
+        runner1CircleBlueRight().height(0, 0),
+        runner1CircleWhiteLeft().width(0, 0),
+        runner1CircleWhiteLeft().height(0, 0),
+        runner1CircleBlueLeft().height(0, 0),
+        runner1CircleBlueLeft().width(0, 0),
+        runner1Content().position.y(boxHeight / 2, 0),
+        runner1Content().height(0, 0),
 
-    yield* runner2().width(0, 0)
-    yield* runner2Text().opacity(0, 0)
-    yield* runner2CircleWhiteLeft().width(0, 0)
-    yield* runner2CircleWhiteLeft().height(0, 0)
-    yield* runner2CircleBlueLeft().height(0, 0)
-    yield* runner2CircleBlueLeft().width(0, 0)
-    yield* runner2Content().position.y(boxHeight / 2, 0);
-    yield* runner2Content().height(0, 0)
+        runner2().width(0, 0),
+        runner2().height(0, 0),
+        runner2CircleWhiteLeft().width(0, 0),
+        runner2CircleWhiteLeft().height(0, 0),
+        runner2CircleBlueLeft().height(0, 0),
+        runner2CircleBlueLeft().width(0, 0),
+        runner2Content().position.y(boxHeight / 2, 0),
+        runner2Content().height(0, 0)
+    )
+
     // endregion
 
 
     yield* all(
-        all(
-            event().restore(1, easeInCubic),
-            eventText().restore(1.5, easeInCubic),
-            eventCircleBlue().restore(1, easeInCubic),
-            eventCircleWhite().restore(1, easeInCubic)
+        chain(
+            all(
+                event().restore(1, easeInCubic),
+                eventCircleBlue().restore(1, easeInCubic),
+                eventCircleWhite().restore(1, easeInCubic)
+            ),
+            eventText().text("Event", 1, easeInCubic),
         ),
-        all(
-            runner1().restore(1, easeInCubic),
-            runner1CircleBlueRight().restore(1, easeInCubic),
-            runner1CircleBlueLeft().restore(1, easeInCubic),
-            runner1CircleWhiteRight().restore(1, easeInCubic),
-            runner1CircleWhiteLeft().restore(1, easeInCubic),
-            runner1Text().restore(1.5, easeInCubic)
+        chain(
+            all(
+                runner1().restore(1, easeInCubic),
+                runner1CircleBlueRight().restore(1, easeInCubic),
+                runner1CircleBlueLeft().restore(1, easeInCubic),
+                runner1CircleWhiteRight().restore(1, easeInCubic),
+                runner1CircleWhiteLeft().restore(1, easeInCubic)
+            ),
+            runner1Text().text("Runner 1", 1, easeInCubic),
         ),
-        all(
-            runner2().restore(1, easeInCubic),
-            runner2Text().restore(1.5, easeInCubic),
-            runner2CircleBlueLeft().restore(1, easeInCubic),
-            runner2CircleWhiteLeft().restore(1, easeInCubic)
-        )
+        chain(
+            all(
+                runner2().restore(1, easeInCubic),
+                runner2CircleBlueLeft().restore(1, easeInCubic),
+                runner2CircleWhiteLeft().restore(1, easeInCubic)
+            ),
+            runner2Text().text("Runner 2", 1, easeInCubic),
+        ),
+        connectorLength(boxWidth * 3, 1.5, easeInCubic)
     )
-
-    yield* connectorLength(boxWidth * 3, 1.5, easeInCubic)
-
 
     yield* beginSlide('Expand');
     yield* all(
@@ -361,7 +347,6 @@ export default makeScene2D(function* (view) {
             runner2Step3().text("Login to GHCR", 2)
         )
     )
-
 
     yield* beginSlide("End Componentes")
 });
