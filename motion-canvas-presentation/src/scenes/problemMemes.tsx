@@ -1,6 +1,6 @@
 import withCICDImage from "../../images/withCICD.png";
 import withoutCICDImage from "../../images/withoutCICD.png";
-
+import "@motion-canvas/core/lib/types/Color"
 import {makeScene2D} from "@motion-canvas/2d";
 import {Img} from "@motion-canvas/2d/lib/components";
 import {all, waitFor} from "@motion-canvas/core/lib/flow";

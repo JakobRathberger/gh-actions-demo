@@ -2,7 +2,16 @@ import {makeScene2D} from "@motion-canvas/2d";
 import {Circle, Line, Node, Txt} from "@motion-canvas/2d/lib/components";
 import {all, chain, waitFor} from "@motion-canvas/core/lib/flow";
 import {beginSlide, createRef, range} from "@motion-canvas/core/lib/utils";
-import {easeInCubic, easeOutCubic, SmoothSpring, spring} from "@motion-canvas/core/lib/tweening";
+import "@motion-canvas/core/lib/types/Color"
+import {
+    BeatSpring,
+    easeInCubic,
+    easeOutCubic,
+    PlopSpring,
+    SmoothSpring,
+    spring,
+    SwingSpring
+} from "@motion-canvas/core/lib/tweening";
 import {createSignal} from "@motion-canvas/core/lib/signals";
 import {slideTransition} from "@motion-canvas/core/lib/transitions";
 import {Direction} from "@motion-canvas/core/lib/types";
@@ -61,14 +70,12 @@ export default makeScene2D(function* (view) {
     )
 
     yield* chain(
-        spring(SmoothSpring, 0, 300, value => {
-            logoGreen().height(value);
-            logoGreen().width(value);
+        spring(SmoothSpring, 0, 75, value => {
+            logoGreen().height(value * 4);
+            logoGreen().width(value * 4);
         }),
-        chain(
-            lineDownLength((logoGreen().width() / 2) - logoGreen().width() * checkMarkCenterOffset, 1, easeInCubic),
-            lineUpLength(logoGreen().width() / 2 + logoGreen().width() * checkMarkCenterOffset - 70, 1, easeOutCubic)
-        )
+        lineDownLength((logoGreen().width() / 2) - logoGreen().width() * checkMarkCenterOffset, 0.5, easeInCubic),
+        lineUpLength(logoGreen().width() / 2 + logoGreen().width() * checkMarkCenterOffset - 70, 0.5, easeOutCubic)
     )
 
     yield* beginSlide("Text")

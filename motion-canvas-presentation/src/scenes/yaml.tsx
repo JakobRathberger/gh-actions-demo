@@ -5,6 +5,7 @@ import {Rect} from "@motion-canvas/2d/lib/components";
 import {Direction} from "@motion-canvas/core/lib/types";
 import {slideTransition} from "@motion-canvas/core/lib/transitions";
 import {CodeBlock, lines} from "@motion-canvas/2d/lib/components/CodeBlock";
+import "@motion-canvas/core/lib/types/Color"
 
 export default makeScene2D(function* (view) {
 

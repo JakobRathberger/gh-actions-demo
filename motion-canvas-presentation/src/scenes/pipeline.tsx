@@ -3,7 +3,7 @@ import deployProductionImg from "../../images/deployToProduction.svg";
 import buildImg from "../../images/build.png";
 import deployStagingImg from "../../images/deployStaging.svg";
 import testImg from "../../images/test.png";
-
+import "@motion-canvas/core/lib/types/Color"
 import {makeScene2D} from "@motion-canvas/2d";
 import {Circle, Img, Line, Rect, Txt} from "@motion-canvas/2d/lib/components";
 import {all, chain} from "@motion-canvas/core/lib/flow";

@@ -2,7 +2,7 @@ import bitBucketImg from "../../images/bitbucket-pipelines-3125267748.png";
 import gitLabImg from "../../images/gitLabCICD.png";
 import jenkinsImg from "../../images/jenkins.png";
 import ghActionsImg from "../../images/githubActions.png";
-
+import "@motion-canvas/core/lib/types/Color"
 import {makeScene2D} from "@motion-canvas/2d";
 import {Circle, Img, Layout, Line, Rect, Txt} from "@motion-canvas/2d/lib/components";
 import {all, waitFor} from "@motion-canvas/core/lib/flow";
