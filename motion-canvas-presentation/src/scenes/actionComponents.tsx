@@ -6,6 +6,7 @@ import {all, chain, waitFor} from "@motion-canvas/core/lib/flow";
 import {createSignal} from "@motion-canvas/core/lib/signals";
 import {slideTransition} from "@motion-canvas/core/lib/transitions";
 import {Direction} from "@motion-canvas/core/lib/types";
+import "@motion-canvas/core/lib/types/Color"
 
 const boxWidth = 500;
 const boxHeight = 120;
@@ -24,6 +25,13 @@ const headerRectStyle: RectProps = {
     width: boxWidth,
     height: boxHeight,
     radius: boxRadius
+};
+
+const contentRectStyle: RectProps = {
+    fill: '#FFFFFF',
+    zIndex: 10,
+    width: boxWidth,
+    radius: [0, 0, boxRadius, boxRadius]
 };
 
 const blueCircleStyle: CircleProps = {
@@ -49,6 +57,7 @@ export default makeScene2D(function* (view) {
     const eventCircleWhite = createRef<Circle>()
     const eventText = createRef<Txt>()
     const eventContent = createRef<Rect>()
+    const eventTriggerText = createRef<Txt>()
 
     const runner1CircleBlueLeft = createRef<Circle>()
     const runner1CircleWhiteLeft = createRef<Circle>()
@@ -69,6 +78,13 @@ export default makeScene2D(function* (view) {
     const job1Text = createRef<Txt>()
     const job2Text = createRef<Txt>()
 
+    const runner1Step1Text = createRef<Txt>()
+    const runner1Step2Text = createRef<Txt>()
+    const runner1Step3Text = createRef<Txt>()
+    const runner1Step4Text = createRef<Txt>()
+
+    const expandedContent = createSignal(false)
+
     const connectorLength = createSignal(0);
 
 
@@ -78,24 +94,19 @@ export default makeScene2D(function* (view) {
     // region DRAWING
     view.add(
         <Node x={boxWidth * -spacingFactor} y={moveToTop}>
-            <Line
-                ref={connectorLine}
-                stroke="#AEB1B9"
-                lineWidth={7}
-                points={range(340).map(i => () =>
-                    [
-                        connectorLength() * i / 340, 0,
-                    ])}
-                zIndex={-1}
+            <Line ref={connectorLine}
+                  stroke="#AEB1B9"
+                  lineWidth={7}
+                  points={range(340).map(i => () => [connectorLength() * i / 340, 0])}
+                  zIndex={-1}
             />
         </Node>
     )
 
     view.add(
-        <Rect
-            ref={event}
-            x={boxWidth * -spacingFactor}
-            {...headerRectStyle}
+        <Rect ref={event}
+              x={boxWidth * -spacingFactor}
+              {...headerRectStyle}
         >
             <Txt ref={eventText} fill="#FFFFFF"/>
 
@@ -103,17 +114,12 @@ export default makeScene2D(function* (view) {
                 <Circle ref={eventCircleWhite} {...smallerCircleStyle}/>
             </Circle>
 
-            <Rect
-                ref={eventContent}
-                x={boxWidth * -spacingFactor}
-                y={moveToTop}
-                fill="#0A69DB"
-                zIndex={10}
-                width={boxWidth}
-                height={boxHeight}
-                radius={boxRadius}
-            />
 
+            <Rect ref={eventContent} y={boxHeight} height={boxHeight} {...contentRectStyle}>
+                <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={20} layout>
+                    <Txt ref={eventTriggerText}/>
+                </Layout>
+            </Rect>
         </Rect>
     )
 
@@ -130,33 +136,26 @@ export default makeScene2D(function* (view) {
             </Circle>
 
 
-            <Rect
-                ref={runner1Content}
-                y={boxHeight * 2}
-                fill="#FFFFFF"
-                width={boxWidth}
-                height={boxHeight * 3}
-                radius={[0, 0, boxRadius, boxRadius]}
-            >
+            <Rect ref={runner1Content} y={boxHeight * 2} height={boxHeight * 3} {...contentRectStyle}>
                 <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={20} layout>
                     <Txt ref={job1Text}/>
 
                     <Node opacity={0} ref={runner1ContentText}>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 1: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                            <Txt ref={runner1Step1Text} paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
                         </Rect>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 2: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                            <Txt ref={runner1Step2Text} paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
                         </Rect>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 3: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                            <Txt ref={runner1Step3Text} paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
                         </Rect>
                         <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
                             <Txt height={60} text={"Step 4: "}/>
-                            <Txt paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                            <Txt ref={runner1Step4Text} paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
                         </Rect>
                     </Node>
                 </Layout>
@@ -167,28 +166,20 @@ export default makeScene2D(function* (view) {
     const runner2Step1 = createRef<Txt>()
     const runner2Step2 = createRef<Txt>()
     const runner2Step3 = createRef<Txt>()
+    const runner2Step4 = createRef<Txt>()
+    const runner2Step5 = createRef<Txt>()
+    const runner2Step6 = createRef<Txt>()
 
     view.add(
-        <Rect
-            ref={runner2}
-            x={boxWidth * spacingFactor}
-            {...headerRectStyle}
-        >
+        <Rect ref={runner2} x={boxWidth * spacingFactor} {...headerRectStyle}>
             <Txt ref={runner2Text} fill="#FFFFFF"/>
 
             <Circle ref={runner2CircleBlueLeft} {...blueCircleStyle} x={() => runner2().width() / -2}>
                 <Circle ref={runner2CircleWhiteLeft} {...smallerCircleStyle}/>
             </Circle>
 
-            <Rect
-                ref={runner2Content}
-                y={boxHeight}
-                fill="#FFFFFF"
-                width={boxWidth}
-                height={boxHeight}
-                radius={[0, 0, boxRadius, boxRadius]}
-            >
-                <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={20} layout>
+            <Rect ref={runner2Content} y={boxHeight} height={boxHeight} {...contentRectStyle}>
+                <Layout direction={'column'} width={() => runner2().width()} gap={30} padding={[40, 20, 0, 20]} layout>
                     <Txt ref={job2Text}/>
 
                     <Node opacity={0} ref={runner2ContentText}>
@@ -210,6 +201,29 @@ export default makeScene2D(function* (view) {
         </Rect>
     )
 
+    const runner2ContentExpandRect = createRef<Rect>()
+
+    view.add(
+        <Rect ref={runner2ContentExpandRect} opacity={0} x={boxWidth * spacingFactor} y={boxHeight} height={boxHeight} {...contentRectStyle}>
+            <Layout direction={'column'} width={() => runner2().width()} gap={30}
+                    padding={[30, 20, 0, 20]} layout>
+                <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                    <Txt height={60} text={"Step 4: "}/>
+                    <Txt ref={runner2Step4} paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                </Rect>
+                <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                    <Txt height={60} text={"Step 5: "}/>
+                    <Txt ref={runner2Step5} paddingLeft={20} fill={"#4d4d4d"} text={"Run script"}/>
+                </Rect>
+                <Rect height={60} radius={10} fontSize={40} fill={"rgba(221,221,221,0.3)"}>
+                    <Txt height={60} text={"Step 6: "}/>
+                    <Txt ref={runner2Step6} paddingLeft={20} fill={"#4d4d4d"} text={"Run action"}/>
+                </Rect>
+            </Layout>
+        </Rect>
+    )
+
+
     // endregion
 
     //------------------//
@@ -220,8 +234,8 @@ export default makeScene2D(function* (view) {
     event().save();
     eventCircleBlue().save();
     eventCircleWhite().save();
+    eventContent().save();
 
-    yield* runner1().radius(boxRadius, 0)
     runner1().save();
     runner1CircleWhiteRight().save();
     runner1CircleBlueRight().save();
@@ -229,7 +243,6 @@ export default makeScene2D(function* (view) {
     runner1CircleBlueLeft().save();
     runner1Content().save();
 
-    yield* runner2().radius(boxRadius, 0)
     runner2().save();
     runner2CircleWhiteLeft().save();
     runner2CircleBlueLeft().save();
@@ -241,6 +254,8 @@ export default makeScene2D(function* (view) {
     yield* all(
         event().width(0, 0),
         event().height(0, 0),
+        eventContent().height(0, 0),
+        eventContent().position.y(boxHeight / 2, 0),
         eventCircleBlue().width(0, 0),
         eventCircleBlue().height(0, 0),
         eventCircleWhite().width(0, 0),
@@ -266,7 +281,7 @@ export default makeScene2D(function* (view) {
         runner2CircleBlueLeft().height(0, 0),
         runner2CircleBlueLeft().width(0, 0),
         runner2Content().position.y(boxHeight / 2, 0),
-        runner2Content().height(0, 0)
+        runner2Content().height(0, 0),
     )
 
     // endregion
@@ -330,21 +345,47 @@ export default makeScene2D(function* (view) {
         )
     )
 
+
     yield* beginSlide("Fill with data")
 
 
     yield* chain(
+        // Expand event box
+        event().radius([boxRadius, boxRadius, 0, 0], 0.5, easeInCubic),
         all(
+            eventContent().restore(1, easeInCubic),
+            all(
+                runner2Content().radius(0,1),
+                runner2ContentExpandRect().opacity(1,1),
+                runner2ContentExpandRect().zIndex(-1,1),
+                runner2ContentExpandRect().position.y((boxHeight * 1.5) *2, 1),
+                runner2ContentExpandRect().height(boxHeight * 2.5, 1),
+            ),
+        ),
+        all(
+            eventTriggerText().fontSize(40, 1),
             job1Text().fontSize(40, 1),
             job2Text().fontSize(40, 1),
-            job1Text().text("Runt Tests:", 1),
+            eventTriggerText().text("Push on Main", 1),
+            job1Text().text("Run Tests:", 1),
             job2Text().text("Build and Publish:", 1)
         ),
         all(
+            runner1Step1Text().text("Start DB Service", 1),
+            runner1Step2Text().text("Checkout Repo", 1),
+            runner1Step3Text().text("Setup JDK 17", 1),
+            runner1Step4Text().text("Run Tests", 1),
+
+
             runner2Step1().text("Checkout Repo", 2),
             runner2Step2().text("Setup Docker Buildx", 2),
             runner2Step2().fontSize(36, 2),
-            runner2Step3().text("Login to GHCR", 2)
+            runner2Step3().text("Login to GHCR", 2),
+
+            runner2Step4().text("Setup JDK 17", 2),
+            runner2Step5().text("Package", 2),
+            //runner2Step6().fontSize(36, 2),
+            runner2Step6().text("🛠️ & 🚀 Images", 2),
         )
     )
 
