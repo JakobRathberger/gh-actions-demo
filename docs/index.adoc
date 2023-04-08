@@ -52,13 +52,22 @@ an application to a production environment.
 == Alternatives
 
 * Jenkins (Open-Source)
+** Pro
+*** Can be hosted local
+*** Jenkins is a highly flexible tool that can be customized to suit specific needs. It supports various plugins and integrations with other tools.
+** Con
+*** Due to local hosting, disruptions can more easily occur, and scaling is also not as simple
 * BitBucket Pipelines
 * GitLab CI/CD
 
 === Why GitHub-Actions
 
-When you are already using a GitHub Repository it is the easiest
-way to build a CI/CD pipeline because there is no setup required.
+* Pro
+** GitHub Actions is fully integrated with GitHub, which makes it easy to set up and use
+** GitHub Actions can scale easily to support large and complex workflows
+* Con
+** GitHub Actions is not as flexible as Jenkins, and some workflows may require workarounds to implement.
+** The dependence of GitHub Actions on GitHub itself and the potential for it to become a paid service in the future are potential cons of the tool.
 
 == Example of using GitHub-Actions
 
